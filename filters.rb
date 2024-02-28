@@ -41,5 +41,5 @@ end
   # Takes in a collection of candidates
   # Sort on Experience and Points
   def ordered_by_qualifications(candidates)
-    
+    candidates.sort_by { |candidate| [-candidate[:years_of_experience], -candidate[:github_points]] }
   end
