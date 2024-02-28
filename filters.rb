@@ -25,17 +25,32 @@ end
   # Applied in the last 15 days
   # Are over the age of 17 (18+)
 def qualified_candidates(candidates)
-  qualified = []
-  candidates.each do |candidate|
-    if candidate[:years_of_experience] > 0 &&
-    candidate[:github_points] >= 100 &&
-    (candidate[:languages].include?("Ruby") || candidate[:languages].include?("Python")) &&
-    candidate[:age] > 17
-    qualified << candidate
-    end
+  qualified = candidates.select do |candidate| 
+    has_required_experience(candidate) &&
+    has_enough_github_points(candidate) &&
+    knows_required_languages(candidate) &&
+    meets_age_requirement(candidate)
   end
   qualified
 end
+
+# Helpers
+def has_required_experience(candidate)
+  candidate[:years_of_experience] > 0
+end
+
+def has_enough_github_points(candidate)
+  candidate[:github_points] >= 100
+end
+
+def knows_required_languages(candidate)
+  candidate[:languages].include?("Ruby") || candidate[:languages].include?("Python")
+end
+
+def meets_age_requirement(candidate)
+  candidate[:age] > 17 
+end
+
   
   # More methods will go below
   # Takes in a collection of candidates
